@@ -32,6 +32,8 @@ jobs:
       with:
         node-version: 20.x
         cache: 'npm'
+    - name: install npm dependencies
+      run: npm install
     - name: Install Playwirght Browsers
       run: npx playwright install
     - name: Start the Aplication
