@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ "main" ]
 jobs:
-  build:
+  build_tests_Unit:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout the repository
@@ -21,3 +21,20 @@ jobs:
       run: npm run test:unit
     - name: Display softuni username
       run: echo "sdplamen"
+  build_UI_tests:
+    needs: build_tests_Unit
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    - name: Install Playwirght Browsers
+      run: npx playwright install
+    - name: Start the Aplication
+      run: npm start &
+    - name: Run UI tests
+      run: npm run test:ui
